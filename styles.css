@@ -1,0 +1,231 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #c8e8ff;
+  padding: 20px;
+}
+.logo-nav {
+  width: 45px; 
+  height: auto;
+  text-align: center;
+  margin-right: auto;
+}
+.navbar {
+  background-color: rgba(247, 247, 247, 0.712); 
+  color: white;
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
+  padding: 3px 15px; 
+  height: 40px;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999; 
+  box-shadow: 0 2px 10px rgba(140, 177, 182, 0.527); 
+  backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px);
+}
+.logo-title {
+  text-align: left;
+  margin: 0;
+  margin-right: 87%;
+
+}
+
+.logo-title h4 {
+  text-align: left;
+  font-size: 1.em;
+  color: #000000;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  width: auto;  
+  gap: 10px; 
+  margin-right: 1%;
+}
+
+.navbar-button {
+  background-color: #2f67ff;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 5px 10px; 
+  font-size: 0.9em;  
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 30%;
+  margin-bottom: 10px;
+}
+
+.navbar-button:hover {
+  background-color: #4abed3;
+}
+.logo {
+  display: block;
+  margin: 0 0 20px 0;
+  width: 180px;
+  height: auto;
+  margin-top: 0;
+}
+
+.container {
+  background: #ffffffab;
+  padding: 40px 40px 60px 40px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  margin: auto;
+  box-shadow: 0 0 15px rgba(8, 66, 83, 0.568);
+  position: relative;
+  margin-top: 70px;
+}
+
+h2 {
+  text-align: right;
+  color: #000000;
+  font-size: 1.9em;
+  margin-top: -140px;
+  margin-bottom: 60px;
+  display: block;
+  margin-left: 290px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  text-align: left;
+  display: block;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #4c90af;
+  box-shadow: 0 0 5px rgba(65, 98, 168, 0.5);
+  outline: none;
+}
+
+button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 14px 20px;
+  background-color: #8fd0ff;
+  color: rgb(0, 0, 0);
+  font-size: 1.1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background-color: #278ed8;
+  color: #ffffff;
+  transform: scale(1.01);
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 20px 40px 20px;
+    width: 90%;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre a logo e o título */
+  }
+
+  .logo {
+    width: 90px;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  .logo-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    margin-top: -35px;
+    display: block;
+    margin-left: 130px;
+  }
+
+  .logo-title h4 {
+    font-size: 0.7em;
+    margin: 0;
+    text-align: center;
+  }
+
+  .logo-nav {
+    width: 50px;
+    height: auto;
+    margin-top: -7px;
+  }
+
+  h2 {
+    font-size: 1.3em;
+    margin-top: -75px;
+    margin-left: 0;
+    text-align: right;
+    margin-bottom: 30px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  label {
+    font-size: 0.95em;
+  }
+
+  input {
+    font-size: 0.9em; 
+    padding: 3px;  
+    margin-bottom: 12px;  
+  }
+
+  button {
+    font-size: 0.9em;
+    padding: 12px 16px;
+  }    
+
+  .navbar-button {
+    background-color: #32c939;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline;
+    margin-top: -30px;
+    margin-left: 680px;
+  }
+}

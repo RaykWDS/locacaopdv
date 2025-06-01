@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Locação de Veículos - Rostur Rent Car</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<script>
+  if (sessionStorage.getItem('logado') !== 'true') {
+    window.location.href = "../Login/login.html"; 
+  }
+</script>
+
+<header class="navbar">
+  <img src="Logo.png" alt="Logo" class="logo-nav">
+  <div class="logo-title">
+    <h4>Rostur Rent Car<br>Gestão de Frotas</h4>
+  </div>
+  <div class="navbar-content">
+    <button class="navbar-button" id="logoutBtn">Sair</button>
+  </div>
+</header>
+
+<div class="container">
+  <img src="Logo.png" class="logo">
+  <h2>Locação de Veículos<br>Rostur Rent Car</h2>
+  <form id="locacaoForm">
+    <label>Nome Completo:</label>
+    <input type="text" id="nome" required>
+
+    <label>CPF:</label>
+    <input type="text" id="cpf" required>
+
+    <label>Data de Nascimento:</label>
+    <input type="date" id="nascimento" required>
+
+    <label>CNH:</label>
+    <input type="text" id="cnh" required>
+
+    <label>Marca do Veículo:</label>
+    <input type="text" id="marca" required>
+
+    <label>Modelo do Veículo:</label>
+    <input type="text" id="modelo" required>
+
+    <label>Ano:</label>
+    <input type="text" id="ano" required>
+
+    <label>KM Entrega:</label>
+    <input type="number" id="kmEntrega" required>
+
+    <label>Horário de Entrega:</label>
+    <input type="time" id="horaEntrega" required>
+
+    <label>Horário de Devolução:</label>
+    <input type="time" id="horaDevolucao" required>
+    
+    <label>Data de Entrega:</label>
+    <input type="date" id="dataEntrega" required>
+
+    <label>Data de Devolução:</label>
+    <input type="date" id="dataDevolucao" required>
+
+    <label>Nome do Locador:</label>
+    <input type="text" id="vendedor" required>
+
+    <label>Valor da Diária (R$):</label>
+    <input type="number" id="valorDiaria" step="0.01" required>
+
+    <label>Forma de Pagamento:</label>
+    <input type="text" id="pagamento" required>
+
+    <button type="button" onclick="gerarPDF()">Registrar locação</button>
+  </form>
+</div>
+
+<script>
+async function gerarPDF() {
+  const { jsPDF } = window.jspdf;
+
+  const nome = document.getElementById('nome').value;
+  const cpf = document.getElementById('cpf').value;
+  const nascimento = document.getElementById('nascimento').value;
+  const cnh = document.getElementById('cnh').value;
+  const marca = document.getElementById('marca').value;
+  const modelo = document.getElementById('modelo').value;
+  const ano = document.getElementById('ano').value;
+  const kmEntrega = parseInt(document.getElementById('kmEntrega').value);
+  const horaEntrega = document.getElementById('horaEntrega').value;
+  const horaDevolucao = document.getElementById('horaDevolucao').value;
+  const dataEntrega = document.getElementById('dataEntrega').value;
+  const dataDevolucao = document.getElementById('dataDevolucao').value;
+  const vendedor = document.getElementById('vendedor').value;
+  const valorDiaria = parseFloat(document.getElementById('valorDiaria').value);
+  const pagamento = document.getElementById('pagamento').value;
+
+  const data1 = new Date(dataEntrega);
+  const data2 = new Date(dataDevolucao);
+  const diferencaDias = Math.ceil((data2 - data1) / (1000 * 60 * 60 * 24)) || 1;
+
+  const valorTotal = valorDiaria * diferencaDias;
+
+  const valorTotalFormatado = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(valorTotal);
+
+  const kmEntregaFormatado = kmEntrega.toLocaleString('pt-BR');
+
+  const empresa = "Rostur Rent Car";
+  const cnpj = "00.000.000/0000-00";
+  const pdf = new jsPDF();
+  const logoUrl = 'logo.png';
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const logoX = 10, logoY = 5, logoWidth = 30, logoHeight = 30;
+
+  pdf.addImage(logoUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
+  const textoX = logoX + logoWidth + 5;
+  const textoY = logoY + 10;
+
+  pdf.setFontSize(18);
+  pdf.text(empresa, textoX, textoY);
+  pdf.setFontSize(12);
+  pdf.text(`CNPJ: ${cnpj}`, textoX, textoY + 8);
+
+  const linhaY = logoY + logoHeight + 10;
+  pdf.line(10, linhaY, pageWidth - 10, linhaY);
+
+  let y = linhaY + 10;
+
+  pdf.setFontSize(14);
+  pdf.text("Dados do Cliente", 14, y);
+  pdf.setFontSize(11);
+  pdf.text(`Nome: ${nome}`, 14, y += 8);
+  pdf.text(`CPF: ${cpf}`, 14, y += 7);
+  pdf.text(`Nascimento: ${nascimento}`, 14, y += 7);
+  pdf.text(`CNH: ${cnh}`, 14, y += 7);
+
+  pdf.line(10, y += 4, pageWidth - 10, y);
+
+  pdf.setFontSize(14);
+  pdf.text("Dados do Veículo", 14, y += 8);
+  pdf.setFontSize(11);
+  pdf.text(`Marca: ${marca}`, 14, y += 8);
+  pdf.text(`Modelo: ${modelo}`, 14, y += 7);
+  pdf.text(`Ano: ${ano}`, 14, y += 7);
+  pdf.text(`KM Entrega: ${kmEntregaFormatado}`, 14, y += 7);
+
+  pdf.line(10, y += 4, pageWidth - 10, y);
+
+  pdf.setFontSize(14);
+  pdf.text("Horários e Datas", 14, y += 8);
+  pdf.setFontSize(11);
+  pdf.text(`Entrega: ${horaEntrega}`, 14, y += 8);
+  pdf.text(`Devolução: ${horaDevolucao}`, 14, y += 7);
+  pdf.text(`Data de Entrega: ${dataEntrega}`, 14, y += 7);
+  pdf.text(`Data de Devolução: ${dataDevolucao}`, 14, y += 7);
+  pdf.text(`Valor da Diária: R$ ${valorDiaria.toFixed(2)}`, 14, y += 7);
+  pdf.text(`Total: ${diferencaDias} diaria(s): ${valorTotalFormatado}`, 14, y += 7);
+  pdf.text(`Forma de Pagamento: ${pagamento}`, 14, y += 7);
+
+  pdf.line(10, y += 4, pageWidth - 10, y);
+
+  pdf.setFontSize(14);
+  pdf.text("Locador:", 14, y += 8);
+  pdf.setFontSize(11);
+  pdf.text(`${vendedor}`, 14, y += 7);
+
+  pdf.line(10, y += 4, pageWidth - 10, y);
+
+  pdf.line(60, y += 17, 150, y);
+  pdf.setFontSize(11);
+  pdf.text("Assinatura do Cliente", 105, y + 7, { align: "center" });
+
+  pdf.line(60, y += 25, 150, y);
+  pdf.text("Assinatura do Locador", 105, y + 7, { align: "center" });
+
+  const dataHora = new Date().toLocaleString('pt-BR');
+  pdf.setFontSize(10);
+  pdf.text(`Emitido em: ${dataHora}`, pageWidth / 2, 290, { align: "center" });
+
+  pdf.save(`${nome}_locacao.pdf`);
+}
+</script>
+
+<script>
+  document.getElementById("logoutBtn").addEventListener("click", function() {
+    sessionStorage.removeItem('logado');
+    alert("Você foi desconectado.");
+    window.location.href = "../Login/login.html";
+  });
+</script>
+
+</body>
+</html>
